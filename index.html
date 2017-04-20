@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=0"/>
+    <title>css3页面平滑过渡</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        *:before{
+            content: ".";
+            display: block;
+            height: 0;
+            visibility: hidden;
+        }
+        html {
+            width: 100%;
+            height: 100%;
+        }
+        body{
+            color: #fff;
+            background-color: #dddddd;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #btm-nav {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        #btm-nav input,#btm-nav a {
+            position: fixed;
+            bottom: 0;
+            width: 20%;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+        }
+        #btm-nav input {
+            z-index: 999;
+            opacity: 0;
+            cursor: pointer;
+        }
+        #btm-nav a {
+            z-index: 10;
+            text-decoration: none;
+            color: rgba(255,255,255,.8);
+            background-color: crimson;
+            border: 1px solid #ddd;
+        }
+        /*位置*/
+        .nav-item-1 ,.nav-item-1 + a{left: 0;}
+        .nav-item-2 ,.nav-item-2 + a{left: 20%;}
+        .nav-item-3 ,.nav-item-3 + a{left: 40%;}
+        .nav-item-4 ,.nav-item-4 + a{left: 60%;}
+        .nav-item-5 ,.nav-item-5 + a{left: 80%;}
+
+        /*单选按钮hover状态*/
+        #btm-nav input:hover + a {
+            background-color: firebrick;
+            transition: all .5s;
+        }
+
+        /*单选按钮checked状态*/
+        #btm-nav input:checked +a {
+            background-color: firebrick;
+            transition: all .5s;
+        }
+        #btm-nav input + a:after{
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 20px solid firebrick;
+            position: absolute;
+            left: 50%;
+            bottom: 100%;
+            margin-left: -15px;
+            opacity: 0;
+        }
+        #btm-nav input:checked +a:after{
+            opacity: 1;
+            transition: all .5s;
+        }
+
+        /*主体内容*/
+        #nav-content {
+            width: 100%;
+            height: 100%;
+        }
+        #nav-content > div {
+            width: 100%;
+            height: 100%;
+            background-color: #ddd;
+            backface-visibility: hidden;
+        }
+        #nav-content > div h1 {
+            text-align: center;
+            margin: 50px auto;
+        }
+        #nav-content > div h3 {
+            width: 50%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #btm-nav .nav-item-1:checked ~ #nav-content {
+            transform: translate3d(0,0,0);
+            transition: all .5s ease-in-out;
+        }
+        #btm-nav .nav-item-2:checked ~ #nav-content {
+            transform: translate3d(0,-100%,0);
+            transition: all .5s ease-in-out;
+        }
+        #btm-nav .nav-item-3:checked ~ #nav-content {
+            transform: translate3d(0,-200%,0);
+            transition: all .5s ease-in-out;
+        }
+        #btm-nav .nav-item-4:checked ~ #nav-content {
+            transform: translate3d(0,-300%,0);
+            transition: all .5s ease-in-out;
+        }
+        #btm-nav .nav-item-5:checked ~ #nav-content {
+            transform: translate3d(0,-400%,0);
+            transition: all .5s ease-in-out;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="btm-nav">
+        <input type="radio" name="item" checked="checked" class="nav-item-1"/>
+        <a href="#nav-content-page1">首页</a>
+        <input type="radio" name="item" class="nav-item-2"/>
+        <a href="#nav-content-page2">公司简介</a>
+        <input type="radio" name="item" class="nav-item-3"/>
+        <a href="#nav-content-page3">产品介绍</a>
+        <input type="radio" name="item" class="nav-item-4"/>
+        <a href="#nav-content-page4">关于我们</a>
+        <input type="radio" name="item" class="nav-item-5"/>
+        <a href="#nav-content-page5">加入我们</a>
+        <div id="nav-content">
+            <div id="nav-content-page1">
+                <h1>首页</h1>
+                <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, ab aliquam aperiam architecto consequuntur eligendi eum expedita, hic magni modi nobis nulla obcaecati praesentium quae, quo repellat voluptates voluptatum. Ut.</h3>
+            </div>
+            <div id="nav-content-page2">
+                <h1>公司简介</h1>
+                <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti deserunt ipsa nostrum quidem! Accusamus amet asperiores deleniti ducimus error excepturi expedita incidunt obcaecati, quaerat, quos reprehenderit repudiandae, sapiente sunt tenetur.</h3>
+            </div>
+            <div id="nav-content-page3">
+                <h1>产品介绍</h1>
+                <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut debitis, distinctio facere fuga iure quod sed? A iure, quia. Debitis delectus distinctio ducimus eveniet minima necessitatibus quibusdam repudiandae, sapiente vitae.</h3>
+            </div>
+            <div id="nav-content-page4">
+                <h1>关于我们</h1>
+                <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio esse fugiat nihil quidem repellendus similique soluta. Beatae et tenetur ut vero! Alias blanditiis dolores esse et possimus, reprehenderit sapiente totam!</h3>
+            </div>
+            <div id="nav-content-page5">
+                <h1>加入我们</h1>
+                <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi consequuntur deserunt dicta doloremque fugit inventore, ipsa, ipsam, mollitia nihil nulla officiis perspiciatis quidem quod rem repellat sapiente sed sequi soluta?</h3>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
